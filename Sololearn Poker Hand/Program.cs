@@ -1,12 +1,45 @@
 using System;
 using System.Collections;
 /*
-* This program will output the rank of the given poker hand
-*
-* @author Stephen Bailey
-* @version 1.0
-*
-*          Sololearn Program
+
+@author Stephen Bailey
+@version 1.0
+Date 3-3-2023
+
+Sololearn Program
+
+You are playing poker with your friends and need to evaluate your hand. 
+A hand consists of five cards and is ranked, from lowest to highest, in the following way:
+
+High Card: Highest value card (from 2 to Ace).
+One Pair: Two cards of the same value.
+Two Pairs: Two different pairs.
+Three of a Kind: Three cards of the same value.
+Straight: All cards are consecutive values.
+Flush: All cards of the same suit.
+Full House: Three of a kind and a pair.
+Four of a Kind: Four cards of the same value.
+Straight Flush: All cards are consecutive values of same suit.
+Royal Flush: 10, Jack, Queen, King, Ace, in same suit. 
+
+Task:
+Output the rank of the given poker hand. 
+
+Input Format: 
+A string, representing five cards, each indicating the value and suite of the card, separated by spaces. 
+Possible card values are: 2 3 4 5 6 7 8 9 10 J Q K A
+Suites:  H (Hearts), D (Diamonds), C (Clubs), S (Spades)
+For example, JD indicates Jack of Diamonds. 
+
+Output Format:
+A string, indicating the rank of the hand (in the format of the above description). 
+
+Sample Input:
+JS 2H JC AC 2D
+
+Sample Output: 
+Two Pairs
+
 */
 namespace Sololearn_Poker_Hand
 {
@@ -15,7 +48,7 @@ namespace Sololearn_Poker_Hand
         static void Main(string[] args)
         {
             // tester input variable, comment out before live on Sololearn
-            //string cards = "10H JH QH KH AH";    // royal flush tester working
+            string cards = "10H JH QH KH AH";    // royal flush tester working
             //string cards = "10H 3H 4H 5H 6H";    // straight flush tester working
             //string cards = "KC 10H KS KD KH";    // four of a kind tester working
             //string cards = "KC 8C KS KD 8D";    // full house tester working
@@ -40,11 +73,22 @@ namespace Sololearn_Poker_Hand
         }
     }
 
-    //
+    // this class contains all the properties and functions to handle and evaluate the poker hand
     class PokerHandEvaluator
     {
+        // CONSTANTS
+        private const int NUMBER_OF_CARDS = 5;
+
+        private const string JACK = "J";
+        private const string QUEEN = "Q";
+        private const string KING = "K";
+
+        private const string SPADES = "S";
+        private const string HEARTS = "H";
+        private const string DIAMONDS = "D";
+
         // card face trackers
-        private int twos, threes, fours, fives, sixes, sevens, eights, nines, tens, elevens, twelves, thirteens, fourteens = 0;
+        private int twos, threes, fours, fives, sixes, sevens, eights, nines, tens, jacks, queens, kings, aces = 0;
 
         // card suit trackers
         private int spades, hearts, diamonds, clubs = 0;
@@ -53,7 +97,7 @@ namespace Sololearn_Poker_Hand
         private ArrayList unsortedCardsNumbers = new ArrayList();
 
         // array after sorting arraylist
-        private int[] sortedArray = new int[5];
+        private int[] sortedArray = new int[NUMBER_OF_CARDS];
 
         // properties
         private string Card1 { get; set; }
@@ -63,35 +107,35 @@ namespace Sololearn_Poker_Hand
         private string Card5 { get; set; }
         public string Ranking { get; set; } = "";
 
-        // Card Ranker constructer
+        // constructor
         public PokerHandEvaluator(string cards)
         {
             // call method to separate hand into cards
-            SeparateHand(cards);
+            SeparateTheHand(cards);
 
             // rank the cards
-            RankCards();
+            RankTheCards();
 
             // sort the cards value
-            SortCards();
+            SortTheCards();
 
             // check for final conditions ie card rank
             EvaluateTheHand();
         }
 
-        // card ranking method
-        private void RankCards()
+        // method card ranking method
+        private void RankTheCards()
         {
             // call method to determine how many cards of same value
-            TrackCards(Card1);
-            TrackCards(Card2);
-            TrackCards(Card3);
-            TrackCards(Card4);
-            TrackCards(Card5);
+            TrackTheCards(Card1);
+            TrackTheCards(Card2);
+            TrackTheCards(Card3);
+            TrackTheCards(Card4);
+            TrackTheCards(Card5);
         }
 
         // method to turn hand into separate cards
-        private void SeparateHand(string cards)
+        private void SeparateTheHand(string cards)
         {
             // split original input hand into array on blanks
             string[] handArray = cards.Split(' ');
@@ -104,8 +148,8 @@ namespace Sololearn_Poker_Hand
             Card5 = handArray[4];
         }
 
-        // determine track card values
-        private void TrackCards(string card)
+        // method determine and track card values
+        private void TrackTheCards(string card)
         {
             // if 3 characters in card must be a 10
             if (card.Length == 3)
@@ -117,13 +161,13 @@ namespace Sololearn_Poker_Hand
                 unsortedCardsNumbers.Add(10);
 
                 // pass in index (index for suit must be third character because of ten) and card
-                DetermineSuit(2, card);
+                DetermineTheSuit(2, card);
             }
             // check if number ie 2 through 9 
             else if (int.TryParse(card[0].ToString(), out int value))
             {
                 // pass in index (index for suit must be 2nd character because NOT a ten) and card
-                DetermineSuit(1, card);
+                DetermineTheSuit(1, card);
 
                 // add to card trackers
                 switch (value)
@@ -189,34 +233,34 @@ namespace Sololearn_Poker_Hand
             else
             {// else must be a letter jack through ace
                 // pass in index (index for suit must be 2nd character because NOT a ten) and card
-                DetermineSuit(1, card);
+                DetermineTheSuit(1, card);
 
                 switch (card[0].ToString())
                 {
-                    case "J":
-                        // add to elevens tracker
-                        elevens++;
+                    case JACK:
+                        // add to jacks tracker
+                        jacks++;
 
                         // add to unsorted array to eventually check for consecutive numbers (straights)
                         unsortedCardsNumbers.Add(11);
                         break;
-                    case "Q":
-                        // add to twelves tracker
-                        twelves++;
+                    case QUEEN:
+                        // add to queens tracker
+                        queens++;
 
                         // add to unsorted array to eventually check for consecutive numbers (straights)
                         unsortedCardsNumbers.Add(12);
                         break;
-                    case "K":
-                        // add to thirteens tracker
-                        thirteens++;
+                    case KING:
+                        // add to kings tracker
+                        kings++;
 
                         // add to unsorted array to eventually check for consecutive numbers (straights)
                         unsortedCardsNumbers.Add(13);
                         break;
-                    default:
-                        // add to fourteens tracker
-                        fourteens++;
+                    default:    // must be an ACE
+                        // add to aces tracker
+                        aces++;
 
                         // add to unsorted array to eventually check for consecutive numbers (straights)
                         unsortedCardsNumbers.Add(14);
@@ -225,20 +269,20 @@ namespace Sololearn_Poker_Hand
             }
         }
 
-        // determine suit of the card
-        private void DetermineSuit(int index, string card1)
+        // method determine suit of the card
+        private void DetermineTheSuit(int index, string card1)
         {
             switch (card1[index].ToString())
             {
-                case "S":
+                case SPADES:
                     // add to spades tracker
                     spades++;
                     break;
-                case "H":
+                case HEARTS:
                     // add to hearts tracker
                     hearts++;
                     break;
-                case "D":
+                case DIAMONDS:
                     // add to diamonds tracker
                     diamonds++;
                     break;
@@ -249,7 +293,7 @@ namespace Sololearn_Poker_Hand
             }
         }
 
-        // determine value of the hand
+        // method determine value of the hand
         private void EvaluateTheHand()
         {
             if (IsHandRoyalFlush())
@@ -276,7 +320,7 @@ namespace Sololearn_Poker_Hand
             {
                 Ranking = "Straight";
             }
-            else if (IsHandThreeOfAKind())
+            else if (IsHandThreeOfKind())
             {
                 Ranking = "Three of a Kind";
             }
@@ -294,8 +338,8 @@ namespace Sololearn_Poker_Hand
             }
         }
 
-        // determines if cards are sequential
-        private bool CardsSequential()
+        // method determines if cards are sequential
+        private bool AreCardsSequential()
         {
             // check for consecutive numbers 
             if (sortedArray[sortedArray.Length - 1] == sortedArray[0] + sortedArray.Length - 1)
@@ -306,8 +350,8 @@ namespace Sololearn_Poker_Hand
             return false;
         }
 
-        // sorts cards
-        private void SortCards()
+        // method sorts cards
+        private void SortTheCards()
         {
             // sort the cards numbers
             unsortedCardsNumbers.Sort();
@@ -316,10 +360,10 @@ namespace Sololearn_Poker_Hand
             sortedArray = (int[])unsortedCardsNumbers.ToArray(typeof(int));
         }
 
-        // is hand a royal flush
+        // method is hand a royal flush
         private bool IsHandRoyalFlush()
         {
-            if (tens == 1 && elevens == 1 && twelves == 1 && thirteens == 1 && fourteens == 1 && (spades == 5 || hearts == 5 || diamonds == 5 || clubs == 5))
+            if (tens == 1 && jacks == 1 && queens == 1 && kings == 1 && aces == 1 && (spades == 5 || hearts == 5 || diamonds == 5 || clubs == 5))
             {
                 return true;
             }
@@ -327,10 +371,10 @@ namespace Sololearn_Poker_Hand
             return false;
         }
 
-        // is hand a straight flush
+        // method is hand a straight flush
         private bool IsHandStraightFlush()
         {
-            if (CardsSequential() && (spades == 5 || hearts == 5 || diamonds == 5 || clubs == 5))
+            if (AreCardsSequential() && (spades == 5 || hearts == 5 || diamonds == 5 || clubs == 5))
             {
                 return true;
             }
@@ -338,10 +382,10 @@ namespace Sololearn_Poker_Hand
             return false;
         }
 
-        // is hand four of a kind
+        // method is hand four of a kind
         private bool IsHandFourOfAKind()
         {
-            if (twos == 4 || threes == 4 || fours == 4 || fives == 4 || sixes == 4 || sevens == 4 || eights == 4 || nines == 4 || tens == 4 || elevens == 4 || twelves == 4 || thirteens == 4 || fourteens == 4)
+            if (twos == 4 || threes == 4 || fours == 4 || fives == 4 || sixes == 4 || sevens == 4 || eights == 4 || nines == 4 || tens == 4 || jacks == 4 || queens == 4 || kings == 4 || aces == 4)
             {
                 return true;
             }
@@ -349,10 +393,10 @@ namespace Sololearn_Poker_Hand
             return false;
         }
 
-        // is hand a full house
+        // method is hand a full house
         private bool IsHandFullHouse()
         {
-            if ((twos == 3 || threes == 3 || fours == 3 || fives == 3 || sixes == 3 || sevens == 3 || eights == 3 || nines == 3 || tens == 3 || elevens == 3 || twelves == 3 || thirteens == 3 || fourteens == 3) && (twos == 2 || threes == 2 || fours == 2 || fives == 2 || sixes == 2 || sevens == 2 || eights == 2 || nines == 2 || tens == 2 || elevens == 2 || twelves == 2 || thirteens == 2 || fourteens == 2))
+            if ((twos == 3 || threes == 3 || fours == 3 || fives == 3 || sixes == 3 || sevens == 3 || eights == 3 || nines == 3 || tens == 3 || jacks == 3 || queens == 3 || kings == 3 || aces == 3) && (twos == 2 || threes == 2 || fours == 2 || fives == 2 || sixes == 2 || sevens == 2 || eights == 2 || nines == 2 || tens == 2 || jacks == 2 || queens == 2 || kings == 2 || aces == 2))
             {
                 return true;
             }
@@ -360,7 +404,7 @@ namespace Sololearn_Poker_Hand
             return false;
         }
 
-        // is hand a flush
+        // method is hand a flush
         private bool IsHandFlush()
         {
             if (spades == 5 || hearts == 5 || diamonds == 5 || clubs == 5)
@@ -371,10 +415,10 @@ namespace Sololearn_Poker_Hand
             return false;
         }
 
-        // is hand a straight
+        // method is hand a straight
         private bool IsHandStraight()
         {
-            if (CardsSequential())
+            if (AreCardsSequential())
             {
                 return true;
             }
@@ -382,10 +426,10 @@ namespace Sololearn_Poker_Hand
             return false;
         }
 
-        // is hand three of a kind
-        private bool IsHandThreeOfAKind()
+        // method is hand three of a kind
+        private bool IsHandThreeOfKind()
         {
-            if (twos == 3 || threes == 3 || fours == 3 || fives == 3 || sixes == 3 || sevens == 3 || eights == 3 || nines == 3 || tens == 3 || elevens == 3 || twelves == 3 || thirteens == 3 || fourteens == 3)
+            if (twos == 3 || threes == 3 || fours == 3 || fives == 3 || sixes == 3 || sevens == 3 || eights == 3 || nines == 3 || tens == 3 || jacks == 3 || queens == 3 || kings == 3 || aces == 3)
             {
                 return true;
             }
@@ -393,7 +437,7 @@ namespace Sololearn_Poker_Hand
             return false;
         }
 
-        // is hand two pairs
+        // method is hand two pairs
         private bool IsHandTwoPairs()
         {
             if (CheckForTwoPairs())
@@ -404,22 +448,11 @@ namespace Sololearn_Poker_Hand
             return false;
         }
 
-        // is hand one pair
-        private bool IsHandOnePair()
-        {
-            if (twos == 2 || threes == 2 || fours == 2 || fives == 2 || sixes == 2 || sevens == 2 || eights == 2 || nines == 2 || tens == 2 || elevens == 2 || twelves == 2 || thirteens == 2 || fourteens == 2)
-            {
-                return true;
-            }
-
-            return false;
-        }
-
-        //
+        // method to see if hand is two pairs
         private bool CheckForTwoPairs()
         {
             // array list for unsorted cards
-            ArrayList trackerArray = new ArrayList { twos, threes, fours, fives, sixes, sevens, eights, nines, tens, elevens, twelves, thirteens, fourteens };
+            ArrayList trackerArray = new ArrayList { twos, threes, fours, fives, sixes, sevens, eights, nines, tens, jacks, queens, kings, aces };
 
             // sort tracker 
             trackerArray.Sort();
@@ -427,16 +460,16 @@ namespace Sololearn_Poker_Hand
             // reverse the order get populated trackers in the front of array List
             trackerArray.Reverse();
 
-            // 
+            // loop through array list of trackers
             for (int i = 0; i < 12; i++)
             {
-                //
+                // grab the first value in the array list
                 if (int.TryParse(trackerArray[0].ToString(), out int value1))
                 {
-                    //
+                    // grab the second value in the array list
                     if (int.TryParse(trackerArray[1].ToString(), out int value2))
                     {
-                        // if two trackers have pairs
+                        // if two of the trackers have pairs
                         if (value1 == 2 && value2 == 2)
                         {
                             {
@@ -449,6 +482,17 @@ namespace Sololearn_Poker_Hand
             }
 
             // must not be 2 pairs
+            return false;
+        }
+
+        // method is hand one pair
+        private bool IsHandOnePair()
+        {
+            if (twos == 2 || threes == 2 || fours == 2 || fives == 2 || sixes == 2 || sevens == 2 || eights == 2 || nines == 2 || tens == 2 || jacks == 2 || queens == 2 || kings == 2 || aces == 2)
+            {
+                return true;
+            }
+
             return false;
         }
     }
