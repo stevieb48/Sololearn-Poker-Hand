@@ -339,16 +339,7 @@ namespace Sololearn_Poker_Hand
         }
 
         // method determines if cards are sequential
-        private bool AreCardsSequential()
-        {
-            // check for consecutive numbers 
-            if (sortedArray[sortedArray.Length - 1] == sortedArray[0] + sortedArray.Length - 1)
-            {
-                return true;
-            }
-
-            return false;
-        }
+        private bool AreCardsSequential() => (sortedArray[sortedArray.Length - 1] == sortedArray[0] + sortedArray.Length - 1) ? true : false;
 
         // method sorts cards
         private void SortTheCards()
@@ -361,92 +352,28 @@ namespace Sololearn_Poker_Hand
         }
 
         // method is hand a royal flush
-        private bool IsHandRoyalFlush()
-        {
-            if (tens == 1 && jacks == 1 && queens == 1 && kings == 1 && aces == 1 && (spades == 5 || hearts == 5 || diamonds == 5 || clubs == 5))
-            {
-                return true;
-            }
-
-            return false;
-        }
+        private bool IsHandRoyalFlush() => (tens == 1 && jacks == 1 && queens == 1 && kings == 1 && aces == 1 && (spades == 5 || hearts == 5 || diamonds == 5 || clubs == 5)) ? true : false;
 
         // method is hand a straight flush
-        private bool IsHandStraightFlush()
-        {
-            if (AreCardsSequential() && (spades == 5 || hearts == 5 || diamonds == 5 || clubs == 5))
-            {
-                return true;
-            }
-
-            return false;
-        }
+        private bool IsHandStraightFlush() => (AreCardsSequential() && (spades == 5 || hearts == 5 || diamonds == 5 || clubs == 5)) ? true : false;
 
         // method is hand four of a kind
-        private bool IsHandFourOfAKind()
-        {
-            if (twos == 4 || threes == 4 || fours == 4 || fives == 4 || sixes == 4 || sevens == 4 || eights == 4 || nines == 4 || tens == 4 || jacks == 4 || queens == 4 || kings == 4 || aces == 4)
-            {
-                return true;
-            }
-
-            return false;
-        }
+        private bool IsHandFourOfAKind() => (twos == 4 || threes == 4 || fours == 4 || fives == 4 || sixes == 4 || sevens == 4 || eights == 4 || nines == 4 || tens == 4 || jacks == 4 || queens == 4 || kings == 4 || aces == 4) ? true : false;
 
         // method is hand a full house
-        private bool IsHandFullHouse()
-        {
-            if ((twos == 3 || threes == 3 || fours == 3 || fives == 3 || sixes == 3 || sevens == 3 || eights == 3 || nines == 3 || tens == 3 || jacks == 3 || queens == 3 || kings == 3 || aces == 3) && (twos == 2 || threes == 2 || fours == 2 || fives == 2 || sixes == 2 || sevens == 2 || eights == 2 || nines == 2 || tens == 2 || jacks == 2 || queens == 2 || kings == 2 || aces == 2))
-            {
-                return true;
-            }
-
-            return false;
-        }
+        private bool IsHandFullHouse() => ((twos == 3 || threes == 3 || fours == 3 || fives == 3 || sixes == 3 || sevens == 3 || eights == 3 || nines == 3 || tens == 3 || jacks == 3 || queens == 3 || kings == 3 || aces == 3) && (twos == 2 || threes == 2 || fours == 2 || fives == 2 || sixes == 2 || sevens == 2 || eights == 2 || nines == 2 || tens == 2 || jacks == 2 || queens == 2 || kings == 2 || aces == 2)) ? true : false;
 
         // method is hand a flush
-        private bool IsHandFlush()
-        {
-            if (spades == 5 || hearts == 5 || diamonds == 5 || clubs == 5)
-            {
-                return true;
-            }
-
-            return false;
-        }
+        private bool IsHandFlush() => (spades == 5 || hearts == 5 || diamonds == 5 || clubs == 5) ? true : false;
 
         // method is hand a straight
-        private bool IsHandStraight()
-        {
-            if (AreCardsSequential())
-            {
-                return true;
-            }
-
-            return false;
-        }
+        private bool IsHandStraight() => AreCardsSequential() ? true : false;
 
         // method is hand three of a kind
-        private bool IsHandThreeOfKind()
-        {
-            if (twos == 3 || threes == 3 || fours == 3 || fives == 3 || sixes == 3 || sevens == 3 || eights == 3 || nines == 3 || tens == 3 || jacks == 3 || queens == 3 || kings == 3 || aces == 3)
-            {
-                return true;
-            }
-
-            return false;
-        }
+        private bool IsHandThreeOfKind() => (twos == 3 || threes == 3 || fours == 3 || fives == 3 || sixes == 3 || sevens == 3 || eights == 3 || nines == 3 || tens == 3 || jacks == 3 || queens == 3 || kings == 3 || aces == 3) ? true : false;
 
         // method is hand two pairs
-        private bool IsHandTwoPairs()
-        {
-            if (CheckForTwoPairs())
-            {
-                return true;
-            }
-
-            return false;
-        }
+        private bool IsHandTwoPairs() => CheckForTwoPairs() ? true : false;
 
         // method to see if hand is two pairs
         private bool CheckForTwoPairs()
@@ -486,14 +413,6 @@ namespace Sololearn_Poker_Hand
         }
 
         // method is hand one pair
-        private bool IsHandOnePair()
-        {
-            if (twos == 2 || threes == 2 || fours == 2 || fives == 2 || sixes == 2 || sevens == 2 || eights == 2 || nines == 2 || tens == 2 || jacks == 2 || queens == 2 || kings == 2 || aces == 2)
-            {
-                return true;
-            }
-
-            return false;
-        }
+        private bool IsHandOnePair() => (twos == 2 || threes == 2 || fours == 2 || fives == 2 || sixes == 2 || sevens == 2 || eights == 2 || nines == 2 || tens == 2 || jacks == 2 || queens == 2 || kings == 2 || aces == 2) ? true : false;
     }
 }
