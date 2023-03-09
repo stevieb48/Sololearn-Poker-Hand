@@ -105,7 +105,7 @@ namespace Sololearn_Poker_Hand
         private string Card3 { get; set; }
         private string Card4 { get; set; }
         private string Card5 { get; set; }
-        public string Ranking { get; set; } = "";
+        public string Ranking { get; set; }
 
         // constructor
         public PokerHandEvaluator(string cards)
