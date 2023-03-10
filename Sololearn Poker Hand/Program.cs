@@ -65,7 +65,7 @@ namespace Sololearn_Poker_Hand
             // return card ranking
             PokerHandEvaluator newPokerHandEvaluator = new PokerHandEvaluator(cards);
 
-            // send cards to be ranked and output tanking
+            // send cards to be ranked and output ranking
             Console.WriteLine(newPokerHandEvaluator.Ranking);
 
             // hold the console open, comment out before live on Sololearn
