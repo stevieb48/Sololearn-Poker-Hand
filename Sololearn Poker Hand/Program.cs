@@ -49,7 +49,7 @@ namespace Sololearn_Poker_Hand
         {
             // tester input variable, comment out before live on Sololearn
             string cards = "10H JH QH KH AH";    // royal flush tester working
-            //string cards = "10H 3H 4H 5H 6H";    // straight flush tester working
+            //string cards = "2H 3H 4H 5H 6H";    // straight flush tester working
             //string cards = "KC 10H KS KD KH";    // four of a kind tester working
             //string cards = "KC 8C KS KD 8D";    // full house tester working
             //string cards = "KC 8C 9C 4C 2C";    // flush tester working
@@ -97,7 +97,7 @@ namespace Sololearn_Poker_Hand
         private ArrayList unsortedCardsNumbers = new ArrayList();
 
         // array after sorting arraylist
-        private int[] sortedArray = new int[NUMBER_OF_CARDS];
+        private int[] sortedCardsNumbers = new int[NUMBER_OF_CARDS];
 
         // properties
         private string Card1 { get; set; }
@@ -127,11 +127,18 @@ namespace Sololearn_Poker_Hand
         private void RankTheCards()
         {
             // call method to determine how many cards of same value
-            TrackTheCards(Card1);
-            TrackTheCards(Card2);
-            TrackTheCards(Card3);
-            TrackTheCards(Card4);
-            TrackTheCards(Card5);
+            TrackTheCardValue(Card1);
+            TrackTheCardValue(Card2);
+            TrackTheCardValue(Card3);
+            TrackTheCardValue(Card4);
+            TrackTheCardValue(Card5);
+
+            // call method to determine how many cards of same suit
+            TrackTheCardSuit(Card1);
+            TrackTheCardSuit(Card2);
+            TrackTheCardSuit(Card3);
+            TrackTheCardSuit(Card4);
+            TrackTheCardSuit(Card5);
         }
 
         // method to turn hand into separate cards
@@ -149,147 +156,137 @@ namespace Sololearn_Poker_Hand
         }
 
         // method determine and track card values
-        private void TrackTheCards(string card)
+        private void TrackTheCardValue(string card)
         {
-            // if 3 characters in card must be a 10
-            if (card.Length == 3)
+            // check if hand contains specific value
+            if (card.Contains("2"))
+            {
+                // add to twos tracker
+                twos++;
+
+                // add to unsorted array to eventually check for consecutive numbers (straights)
+                unsortedCardsNumbers.Add(2);
+            }
+            else if (card.Contains("3"))
+            {
+                // add to threes tracker
+                threes++;
+
+                // add to unsorted array to eventually check for consecutive numbers (straights)
+                unsortedCardsNumbers.Add(3);
+            }
+            else if (card.Contains("4"))
+            {
+                // add to fours tracker
+                fours++;
+
+                // add to unsorted array to eventually check for consecutive numbers (straights)
+                unsortedCardsNumbers.Add(4);
+            }
+            else if (card.Contains("5"))
+            {
+                // add to fives tracker
+                fives++;
+
+                // add to unsorted array to eventually check for consecutive numbers (straights)
+                unsortedCardsNumbers.Add(5);
+            }
+            else if (card.Contains("6"))
+            {
+                // add to sixes tracker
+                sixes++;
+
+                // add to unsorted array to eventually check for consecutive numbers (straights)
+                unsortedCardsNumbers.Add(6);
+            }
+            else if (card.Contains("7"))
+            {
+                // add to sevens tracker
+                sevens++;
+
+                // add to unsorted array to eventually check for consecutive numbers (straights)
+                unsortedCardsNumbers.Add(7);
+            }
+            else if (card.Contains("8"))
+            {
+                // add to eights tracker
+                eights++;
+
+                // add to unsorted array to eventually check for consecutive numbers (straights)
+                unsortedCardsNumbers.Add(8);
+            }
+            else if (card.Contains("9"))
+            {
+                // add to nines tracker
+                nines++;
+
+                // add to unsorted array to eventually check for consecutive numbers (straights)
+                unsortedCardsNumbers.Add(9);
+            }
+            else if (card.Contains("10"))
             {
                 // add to tens tracker
                 tens++;
 
                 // add to unsorted array to eventually check for consecutive numbers (straights)
                 unsortedCardsNumbers.Add(10);
-
-                // pass in index (index for suit must be third character because of ten) and card
-                DetermineTheSuit(2, card);
             }
-            // check if number ie 2 through 9 
-            else if (int.TryParse(card[0].ToString(), out int value))
+            else if (card.Contains(JACK))
             {
-                // pass in index (index for suit must be 2nd character because NOT a ten) and card
-                DetermineTheSuit(1, card);
+                // add to jacks tracker
+                jacks++;
 
-                // add to card trackers
-                switch (value)
-                {// must be a number 2 through 9
-                    case 2:
-                        // add to twos tracker
-                        twos++;
-
-                        // add to unsorted array to eventually check for consecutive numbers (straights)
-                        unsortedCardsNumbers.Add(2);
-                        break;
-                    case 3:
-                        // add to threes tracker
-                        threes++;
-
-                        // add to unsorted array to eventually check for consecutive numbers (straights)
-                        unsortedCardsNumbers.Add(3);
-                        break;
-                    case 4:
-                        // add to fours tracker
-                        fours++;
-
-                        // add to unsorted array to eventually check for consecutive numbers (straights)
-                        unsortedCardsNumbers.Add(4);
-                        break;
-                    case 5:
-                        // add to fives tracker
-                        fives++;
-
-                        // add to unsorted array to eventually check for consecutive numbers (straights)
-                        unsortedCardsNumbers.Add(5);
-                        break;
-                    case 6:
-                        // add to sixes tracker
-                        sixes++;
-
-                        // add to unsorted array to eventually check for consecutive numbers (straights)
-                        unsortedCardsNumbers.Add(6);
-                        break;
-                    case 7:
-                        // add to sevens tracker
-                        sevens++;
-
-                        // add to unsorted array to eventually check for consecutive numbers (straights)
-                        unsortedCardsNumbers.Add(7);
-                        break;
-                    case 8:
-                        // add to eights tracker
-                        eights++;
-
-                        // add to unsorted array to eventually check for consecutive numbers (straights)
-                        unsortedCardsNumbers.Add(8);
-                        break;
-                    default:
-                        // add to nines tracker
-                        nines++;
-
-                        // add to unsorted array to eventually check for consecutive numbers (straights)
-                        unsortedCardsNumbers.Add(9);
-                        break;
-                }
+                // add to unsorted array to eventually check for consecutive numbers (straights)
+                unsortedCardsNumbers.Add(11);
             }
-            else
-            {// else must be a letter jack through ace
-                // pass in index (index for suit must be 2nd character because NOT a ten) and card
-                DetermineTheSuit(1, card);
+            else if (card.Contains(QUEEN))
+            {
+                // add to queens tracker
+                queens++;
 
-                switch (card[0].ToString())
-                {
-                    case JACK:
-                        // add to jacks tracker
-                        jacks++;
+                // add to unsorted array to eventually check for consecutive numbers (straights)
+                unsortedCardsNumbers.Add(12);
+            }
+            else if (card.Contains(KING))
+            {
+                // add to kings tracker
+                kings++;
 
-                        // add to unsorted array to eventually check for consecutive numbers (straights)
-                        unsortedCardsNumbers.Add(11);
-                        break;
-                    case QUEEN:
-                        // add to queens tracker
-                        queens++;
+                // add to unsorted array to eventually check for consecutive numbers (straights)
+                unsortedCardsNumbers.Add(13);
+            }
+            else// must be an ace
+            {
+                // add to aces tracker
+                aces++;
 
-                        // add to unsorted array to eventually check for consecutive numbers (straights)
-                        unsortedCardsNumbers.Add(12);
-                        break;
-                    case KING:
-                        // add to kings tracker
-                        kings++;
-
-                        // add to unsorted array to eventually check for consecutive numbers (straights)
-                        unsortedCardsNumbers.Add(13);
-                        break;
-                    default:    // must be an ACE
-                        // add to aces tracker
-                        aces++;
-
-                        // add to unsorted array to eventually check for consecutive numbers (straights)
-                        unsortedCardsNumbers.Add(14);
-                        break;
-                }
+                // add to unsorted array to eventually check for consecutive numbers (straights)
+                unsortedCardsNumbers.Add(14);
             }
         }
 
-        // method determine suit of the card
-        private void DetermineTheSuit(int index, string card1)
+        // method to determine and track the cards suit
+        private void TrackTheCardSuit(string card)
         {
-            switch (card1[index].ToString())
+            if (card.Contains(SPADES))
             {
-                case SPADES:
-                    // add to spades tracker
-                    spades++;
-                    break;
-                case HEARTS:
-                    // add to hearts tracker
-                    hearts++;
-                    break;
-                case DIAMONDS:
-                    // add to diamonds tracker
-                    diamonds++;
-                    break;
-                default:
-                    // add to clubs tracker
-                    clubs++;
-                    break;
+                // add to spades tracker
+                spades++;
+            }
+            else if (card.Contains(HEARTS))
+            {
+                // add to hearts tracker
+                hearts++;
+            }
+            else if (card.Contains(DIAMONDS))
+            {
+                // add to diamonds tracker
+                diamonds++;
+            }
+            else// must be a club
+            {
+                // add to clubs tracker
+                clubs++;
             }
         }
 
@@ -339,7 +336,7 @@ namespace Sololearn_Poker_Hand
         }
 
         // method determines if cards are sequential
-        private bool AreCardsSequential() => (sortedArray[sortedArray.Length - 1] == sortedArray[0] + sortedArray.Length - 1) ? true : false;
+        private bool AreCardsSequential() => (sortedCardsNumbers[sortedCardsNumbers.Length - 1] == sortedCardsNumbers[0] + sortedCardsNumbers.Length - 1) ? true : false;
 
         // method sorts cards
         private void SortTheCards()
@@ -348,7 +345,7 @@ namespace Sololearn_Poker_Hand
             unsortedCardsNumbers.Sort();
 
             // move to array to look for consecutive numbers
-            sortedArray = (int[])unsortedCardsNumbers.ToArray(typeof(int));
+            sortedCardsNumbers = (int[])unsortedCardsNumbers.ToArray(typeof(int));
         }
 
         // method is hand a royal flush
