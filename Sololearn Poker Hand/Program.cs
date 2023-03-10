@@ -48,16 +48,16 @@ namespace Sololearn_Poker_Hand
         static void Main(string[] args)
         {
             // tester input variable, comment out before live on Sololearn
-            string cards = "10H JH QH KH AH";    // royal flush tester working
-            //string cards = "2H 3H 4H 5H 6H";    // straight flush tester working
-            //string cards = "KC 10H KS KD KH";    // four of a kind tester working
-            //string cards = "KC 8C KS KD 8D";    // full house tester working
-            //string cards = "KC 8C 9C 4C 2C";    // flush tester working
-            //string cards = "2C 3H 4D 5S 6C";    // straight tester working
-            //string cards = "JC JH 4D JS 10C";    // three of a kind tester working
+            string cards = "10H JH QH KH AH";       // royal flush tester working
+            //string cards = "2H 3H 4H 5H 6H";      // straight flush tester working
+            //string cards = "KC 10H KS KD KH";     // four of a kind tester working
+            //string cards = "KC 8C KS KD 8D";      // full house tester working
+            //string cards = "KC 8C 9C 4C 2C";      // flush tester working
+            //string cards = "2C 3H 4D 5S 6C";      // straight tester working
+            //string cards = "JC JH 4D JS 10C";     // three of a kind tester working
             //string cards = "2C 2H 10D 10S 6C";    // two pairs tester working
-            //string cards = "2C 2H 4D JS 6C";    // one pair tester working
-            //string cards = "JC 2H 4D QS 6C";    // High Card tester working
+            //string cards = "2C 2H 4D JS 6C";      // one pair tester working
+            //string cards = "JC 2H 4D QS 6C";      // High Card tester working
 
             // get cards, uncomment out before live Sololearn
             //string cards =  Console.ReadLine();
@@ -107,23 +107,23 @@ namespace Sololearn_Poker_Hand
         private string Card5 { get; set; }
         public string Ranking { get; set; }
 
-        // constructor
+        // constructor takes in string of cards, separates, ranks, sorts, and evaluates it
         public PokerHandEvaluator(string cards)
         {
             // call method to separate hand into cards
             SeparateTheHand(cards);
 
-            // rank the cards
+            // call method to rank the cards
             RankTheCards();
 
-            // sort the cards value
+            // call method to sort the cards by value
             SortTheCards();
 
-            // check for final conditions ie card rank
+            // call method to check for final conditions ie card rank
             EvaluateTheHand();
         }
 
-        // method card ranking method
+        // method to rank cards
         private void RankTheCards()
         {
             // call method to determine how many cards of same value
@@ -147,7 +147,7 @@ namespace Sololearn_Poker_Hand
             // split original input hand into array on blanks
             string[] handArray = cards.Split(' ');
 
-            // break up hand into separate cards
+            // call method to break up hand into separate cards
             Card1 = handArray[0];
             Card2 = handArray[1];
             Card3 = handArray[2];
@@ -155,7 +155,7 @@ namespace Sololearn_Poker_Hand
             Card5 = handArray[4];
         }
 
-        // method determine and track card values
+        // method to determine and track card values
         private void TrackTheCardValue(string card)
         {
             // check if hand contains specific value
@@ -290,7 +290,7 @@ namespace Sololearn_Poker_Hand
             }
         }
 
-        // method determine value of the hand
+        // method to determine ranking of the hand
         private void EvaluateTheHand()
         {
             if (IsHandRoyalFlush())
@@ -335,10 +335,10 @@ namespace Sololearn_Poker_Hand
             }
         }
 
-        // method determines if cards are sequential
+        // method to determine if cards are in sequential order
         private bool AreCardsSequential() => (sortedCardsNumbers[sortedCardsNumbers.Length - 1] == sortedCardsNumbers[0] + sortedCardsNumbers.Length - 1) ? true : false;
 
-        // method sorts cards
+        // method to sorts cards
         private void SortTheCards()
         {
             // sort the cards numbers
@@ -348,28 +348,28 @@ namespace Sololearn_Poker_Hand
             sortedCardsNumbers = (int[])unsortedCardsNumbers.ToArray(typeof(int));
         }
 
-        // method is hand a royal flush
+        // method to see is hand a royal flush
         private bool IsHandRoyalFlush() => (tens == 1 && jacks == 1 && queens == 1 && kings == 1 && aces == 1 && (spades == 5 || hearts == 5 || diamonds == 5 || clubs == 5)) ? true : false;
 
-        // method is hand a straight flush
+        // method to see is hand a straight flush
         private bool IsHandStraightFlush() => (AreCardsSequential() && (spades == 5 || hearts == 5 || diamonds == 5 || clubs == 5)) ? true : false;
 
-        // method is hand four of a kind
+        // method to see is hand four of a kind
         private bool IsHandFourOfAKind() => (twos == 4 || threes == 4 || fours == 4 || fives == 4 || sixes == 4 || sevens == 4 || eights == 4 || nines == 4 || tens == 4 || jacks == 4 || queens == 4 || kings == 4 || aces == 4) ? true : false;
 
-        // method is hand a full house
+        // method to see is hand a full house
         private bool IsHandFullHouse() => ((twos == 3 || threes == 3 || fours == 3 || fives == 3 || sixes == 3 || sevens == 3 || eights == 3 || nines == 3 || tens == 3 || jacks == 3 || queens == 3 || kings == 3 || aces == 3) && (twos == 2 || threes == 2 || fours == 2 || fives == 2 || sixes == 2 || sevens == 2 || eights == 2 || nines == 2 || tens == 2 || jacks == 2 || queens == 2 || kings == 2 || aces == 2)) ? true : false;
 
-        // method is hand a flush
+        // method to see is hand a flush
         private bool IsHandFlush() => (spades == 5 || hearts == 5 || diamonds == 5 || clubs == 5) ? true : false;
 
-        // method is hand a straight
+        // method to see is hand a straight
         private bool IsHandStraight() => AreCardsSequential() ? true : false;
 
-        // method is hand three of a kind
+        // method to see is hand three of a kind
         private bool IsHandThreeOfKind() => (twos == 3 || threes == 3 || fours == 3 || fives == 3 || sixes == 3 || sevens == 3 || eights == 3 || nines == 3 || tens == 3 || jacks == 3 || queens == 3 || kings == 3 || aces == 3) ? true : false;
 
-        // method is hand two pairs
+        // method to see is hand two pairs
         private bool IsHandTwoPairs() => CheckForTwoPairs() ? true : false;
 
         // method to see if hand is two pairs
@@ -378,10 +378,10 @@ namespace Sololearn_Poker_Hand
             // array list for unsorted cards
             ArrayList trackerArray = new ArrayList { twos, threes, fours, fives, sixes, sevens, eights, nines, tens, jacks, queens, kings, aces };
 
-            // sort tracker 
+            // call method to sort tracker 
             trackerArray.Sort();
 
-            // reverse the order get populated trackers in the front of array List
+            // reverse the order get populated trackers in the front
             trackerArray.Reverse();
 
             // loop through array list of trackers
@@ -409,7 +409,7 @@ namespace Sololearn_Poker_Hand
             return false;
         }
 
-        // method is hand one pair
+        // method to see is hand one pair
         private bool IsHandOnePair() => (twos == 2 || threes == 2 || fours == 2 || fives == 2 || sixes == 2 || sevens == 2 || eights == 2 || nines == 2 || tens == 2 || jacks == 2 || queens == 2 || kings == 2 || aces == 2) ? true : false;
     }
 }
